@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+    
+<head>
+    <meta charset="utf-8">
+    <title>Ma To Do List</title>
+    <link href="https://fonts.googleapis.com/css?family=Chilanka|Modak&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Ma To Do List</h1>
+    <main>
+         <hr>
+        <section id="afaire">
+            <h2>Liste de Tâches</h2>
+            <form action="index.php" name="suppr" method="post">
+       
+        <?php foreach($liste as $todo): ?> 
+        
+        <input type="checkbox" name="coche[]" value="<?= $idbox ?>" id="<?= $idbox ?> " <?= $check ?> />
+        <?php $idbox++; ?>
+        <div id="show" ><span class="<?= $todo[2] ?>"> <?= $todo[0] ?> </span>
+        <div class="hide"><?= $todo[1] ?></div></div>
+        
+         <?php  $moienint=intval($todo[4]);      ?>
+        
+        
+        <?php $datetache=mktime(0, 0, 0,$moienint,$todo[3],$todo[5]); ?>
+        
+        <?php if($datedujour>$datetache){ ?>
+   			<p><strong class="retard">En retard !!! date limite : <?= $todo[3] ?> / <?= $todo[4] ?> / <?= $todo[5] ?> </strong></p>
+   
+   			<?php } else { ?>
+   
+   			<p><strong class="encours">a terminer avant le : <?= $todo[3] ?> / <?= $todo[4] ?> / <?= $todo[5] ?> </strong></p>
+   
+  			 <?php } ?>
+        
+        
+        
+        <?php endforeach; ?>
+        
+        <?php if($idbox>0){ ?> 
+   			 <input type="submit" name="suppr" value="Supprimer" /><input id="buttonSelect" type="submit" name="<?= $namebutton ?>" value="<?= $but ?>" />
+   			
+   			 
+			<?php	} else { ?>
+   
+   				<img  src="img/pat.gif" alt="patrick" /> 
+  		
+   
+   <?php } ?>
+        <!--
+        <input type="submit" name="suppr" value="Supprimer" />
+        -->
+        </form>
+        </section>
+        
+        <hr>
+        
+        
+        <section class="center">
+    <h2>Nouvelle Tâche</h2>
+    <form action="index.php" method="post" name="ajout">
+		<p>
+		 Titre :
+		 </p>
+		 <p>
+		 <input type="text" name="titre" required="required" />
+		</p>
+		<p>
+		 Description : </p>
+		 <p>
+		 <textarea name="details" rows="8" cols="50" maxlength="50">Description de la tâche ici. (max 50 caractéres)</textarea>
+		</p>
+		<p>Date de fin :
+			<select name="jour">
+				<?php for($i=1;$i<32;$i++){ ?>
+				<option value="<?= $i ?>"><?= $i ?></option>
+				<?php } ?>
+			</select>
+			<select name="mois">
+				<?php foreach($mois as $moisennombre=>$selectmois): ?>  
+       			 <option value="<?= $moisennombre ?>"><?= $selectmois ?></option>
+       			 <?php endforeach; ?>
+			</select>
+			<select name="annee">
+				<?php for($k=0;$k<5;$k++){ ?>
+				<option value="<?= $annee+$k ?>"><?= $annee+$k ?></option>
+				<?php } ?>
+			</select>
+		</p>
+		<p>Priorité :
+			<input type="radio" name="priorite" value="basse" id="basse" checked="checked" /> <label class="basse" for="basse">Basse</label>
+			<input type="radio" name="priorite" value="normale" id="normale" /> <label class="normale" for="normale">Normale</label>
+			<input type="radio" name="priorite" value="haute" id="haute" /> <label class="haute" for="haute">Haute</label>
+		</p>
+		<p>
+			<input type="submit" name="ajout" value="Enregistrer" />
+		</p>
+		</form>
+		</section>
+		 <hr>
+</form>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>
